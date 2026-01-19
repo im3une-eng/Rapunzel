@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Happy 1-Year Friendship Anniversary 🎀</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+:root { --accent: #ff77ba; --bg1:#ffeef8; --bg2:#ffd6ec; }
+*{ box-sizing:border-box; margin:0; padding:0; }
+body{
+  min-height:100vh; overflow:hidden;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Comic Sans MS", cursive;
+  background: linear-gradient(180deg, var(--bg1), var(--bg2));
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  transition: background 1.4s ease;
+}
+body.night { background: radial-gradient(circle at 30% 80%, #160026 0%, #030012 60%); color: #fff; }
+
+/* title */
+#title {
+  position: absolute; top:28px; left:50%; transform:translateX(-50%);
+  color: var(--accent); font-size:28px; font-weight:700; letter-spacing:0.6px;
+  text-shadow: 0 0 10px #ffd0ec; white-space:nowrap;
+  overflow:hidden;
+}
+@media (max-width:480px){ #title{ font-size:20px; } }
+
+/* clouds */
+.cloud{ position:absolute; background:#fff; width:220px; height:88px; border-radius:100px; filter:blur(6px); opacity:0.75; }
+.cloud::before,.cloud::after{ content:""; position:absolute; background:#fff; width:140px; height:88px; border-radius:100px; }
+.cloud::before{ left:-30px; top:-24px } .cloud::after{ right:-30px; top:-10px }
+.c1{ left:6%; top:8%; animation:moveClouds 36s linear infinite; }
+.c2{ right:6%; top:16%; width:260px; height:110px; animation:moveClouds 44s linear infinite; }
+.c3{ left:35%; top:6%; width:180px; height:80px; animation:moveClouds 50s linear infinite; }
+@keyframes moveClouds{ from{ transform:translateX(-300px);} to{ transform:translateX(120vw);} }
+
+/* cake wrapper */
+.cake-wrap{ width:360px; display:flex; align-items:center; justify-content:center; position:relative; z-index:8; margin-top:40px; }
+.cake{ width:280px; display:flex; flex-direction:column; align-items:center; gap:18px; position:relative; }
+
+/* cake layers */
+.layer{ width: 280px; height:64px; border-radius:18px; box-shadow:0 12px 30px rgba(255,120,180,0.12); opacity:0; transform:translateY(18px) scale(.95); transition:0.7s ease; }
+.l1{ background: linear-gradient(180deg,#ffd6ec,#ffc5e6); }
+.l2{ background: linear-gradient(180deg,#ffe0f6,#ffc2ea); width:220px; }
+.l3{ background: linear-gradient(180deg,#fff0fb,#ffd9f0); width:180px; }
+
+/* icing/drip */
+.icing-strip{ position:absolute; top:-18px; left:0; width:100%; height:28px; background:rgba(255,255,255,0.95); border-radius:0 0 18px 18px; pointer-events:none; opacity:0; transform:translateY(-6px); transition:0.7s ease;}
+.drip{ position:absolute; top:-26px; left:8%; width:84%; height:34px; background:#fffafc; border-radius:20px; box-shadow:inset 0 -6px 10px rgba(0,0,0,0.02); animation:dripWave 1s ease-in-out infinite alternate; }
+@keyframes dripWave { 0%{ transform:translateY(0); } 100%{ transform:translateY(5px);} }
+
+/* candles */
+.candles{ position:absolute; top:-112px; left:50%; transform:translateX(-50%); display:flex; gap:16px; opacity:0; transition:0.5s ease;}
+.candle{ width:14px; height:60px; background:#fff9fb; border-radius:6px; display:flex; align-items:flex-start; justify-content:center; position:relative; box-shadow:0 6px 12px rgba(255,120,180,0.08);}
+.flame{ width:18px; height:28px; background: radial-gradient(circle at 40% 30%, #fff3b0 10%, #ffd46f 35%, #ff7fb3 70%, transparent 90%); border-radius:50% 50% 40% 40%; transform-origin:center bottom; box-shadow:0 0 20px rgba(255,165,200,0.9); opacity:0; animation:bigGlow 0.9s infinite alternate ease-in-out; transition:0.4s;}
+@keyframes bigGlow { 0%{ transform:scale(1);} 100%{ transform:scale(1.25);} }
+
+/* blow text */
+#blowText { margin-top:18px; color:#ff5aa8; font-weight:600; font-size:18px; opacity:1; transform:translateY(0); transition:0.5s; }
+
+/* next button */
+#nextBtn{ position:fixed; right:24px; bottom:22px; background:#ff69b4; color:white; border:none; padding:12px 20px; border-radius:26px; font-weight:700; cursor:pointer; box-shadow:0 6px 18px rgba(255,120,180,0.18); opacity:0; transform:translateY(18px); transition:0.4s; pointer-events:none; display:flex; align-items:center; justify-content:center; text-decoration:none;}
+#nextBtn.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+#nextBtn.show:hover{ transform:scale(1.05); box-shadow:0 8px 24px rgba(255,120,180,0.25); }
+
+/* balloons */
+.balloon{ position: absolute; bottom: -120px; width: 46px; height: 64px; border-radius: 50%; display:flex; align-items:flex-end; justify-content:center; box-shadow: 0 6px 14px rgba(0,0,0,0.12); }
+.string{ width:2px; height:60px; background: rgba(0,0,0,0.08); margin-bottom:-60px; }
+
+/* fireworks canvas */
+#fx{ position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:999; display:block; }
+
+/* responsive tweaks */
+@media (max-width:480px){
+  .cake{ width:86vw; }
+  .layer{ width:86vw; }
+  .candles{ gap:10px; top:-98px;}
+}
+</style>
+</head>
+<body>
+
+<div id="title"></div>
+
+<div class="cloud c1"></div>
+<div class="cloud c2"></div>
+<div class="cloud c3"></div>
+
+<canvas id="fx"></canvas>
+
+<div class="cake-wrap">
+  <div class="cake" id="cake">
+    <div class="candles" id="candlesRow" aria-hidden="true"></div>
+    <div class="layer l3"><div class="icing-strip"></div><div class="drip"></div></div>
+    <div class="layer l2"><div class="icing-strip"></div></div>
+    <div class="layer l1"><div class="icing-strip"></div></div>
+    <div id="blowText">Close your eyes & blow softly 🌬️</div>
+  </div>
+</div>
+
+<a id="nextBtn" href="rapunzel.html">Yay! Go Ahead 🎀</a>
+
+<audio id="bgSong" src="cake.mp3" preload="auto"></audio>
+<audio id="blowSnd" src="blow-sound.mp3" preload="auto"></audio>
+
+<script>
+// Full title typing
+const text="Happy 1-Year Friendship Anniversary! 🥳💖💗";
+const titleEl=document.getElementById('title');
+let i=0;
+function typeStep(){
+  titleEl.textContent=text.slice(0,i++);
+  if(i<=text.length) setTimeout(typeStep,75);
+}
+typeStep();
+
+// candles
+const candlesRow=document.getElementById('candlesRow');
+for(let i=0;i<5;i++){
+  const c=document.createElement('div'); c.className='candle';
+  const f=document.createElement('div'); f.className='flame'; f.style.opacity='0';
+  c.appendChild(f); candlesRow.appendChild(c);
+}
+
+// sequential cake animation
+function showSequential(){
+  const layers=document.querySelectorAll('.layer');
+  const icing=document.querySelectorAll('.icing-strip');
+  const candles=document.getElementById('candlesRow');
+  layers.forEach((l,idx)=>{ setTimeout(()=>{ l.style.opacity=1; l.style.transform='translateY(0) scale(1)'; }, idx*700 + 600); });
+  setTimeout(()=>{ icing.forEach(s=>{ s.style.opacity=1; s.style.transform='translateY(0)'; }); candles.style.opacity=1; fadeFlames(); }, 2600);
+}
+function fadeFlames(){
+  document.querySelectorAll('.flame').forEach((f,idx)=>{ setTimeout(()=>{ f.style.opacity=1; }, idx*180); });
+}
+showSequential();
+
+// fireworks
+const canvas=document.getElementById('fx'); const ctx=canvas.getContext('2d');
+function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
+resize(); window.addEventListener('resize',resize);
+let particles=[], bigBursts=false;
+function spawnSoft(){ const hue=Math.random()*360;
+  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height*0.5,vx:(Math.random()-0.5)*0.6,vy:(Math.random()-0.5)*0.6,life:80+Math.random()*40,size:1+Math.random()*2,color:`hsl(${hue},80%,70%)`});
+}
+function spawnBurst(x,y,count=80){ const hue=Math.random()*360;
+  for(let i=0;i<count;i++){ const a=Math.random()*Math.PI*2; const speed=Math.random()*4+1;
+    particles.push({x,y,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,life:40+Math.round(Math.random()*40),size:2+Math.random()*3,color:`hsl(${(hue+(Math.random()*40-20)).toFixed(0)},90%,${60+Math.random()*10}%)`});
+  }
+}
+function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(Math.random()<0.1) spawnSoft();
+  for(let i=particles.length-1;i>=0;i--){ const p=particles[i]; p.vy+=0.02; p.x+=p.vx; p.y+=p.vy; p.life--; ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill(); p.size*=0.996; if(p.life<=0||p.y>canvas.height+50) particles.splice(i,1);}
+  if(bigBursts && Math.random()<0.12) spawnBurst(Math.random()*canvas.width,Math.random()*canvas.height*0.5,100);
+  requestAnimationFrame(animate);
+}
+animate();
+
+// balloons
+function spawnBalloon(color,left){ const b=document.createElement('div'); b.className='balloon'; b.style.background=color; b.style.left=left+'vw'; b.style.bottom='-120px';
+  const s=document.createElement('div'); s.className='string'; b.appendChild(s); document.body.appendChild(b);
+  setTimeout(()=>{ b.style.transform='translateY(-120vh)'; b.style.opacity='0'; },40); setTimeout(()=>b.remove(),6800);
+}
+
+// blow detection via mic
+let blown=false;
+function startMicListen(){
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    const audioCtx=new AudioContext();
+    const mic=audioCtx.createMediaStreamSource(stream);
+    const analyser=audioCtx.createAnalyser(); analyser.fftSize=2048;
+    mic.connect(analyser); const data=new Uint8Array(analyser.frequencyBinCount);
+    function detect(){ 
+      analyser.getByteFrequencyData(data);
+      let vol=data.reduce((a,b)=>a+b,0)/data.length;
+      if(vol>70 && !blown) doBlowSequence(); // threshold 70
+      requestAnimationFrame(detect);
+    } detect();
+  }).catch(()=>{ console.warn('Mic unavailable — click cake to blow.'); });
+}
+startMicListen();
+document.getElementById('cake').addEventListener('click',()=>{ if(!blown) doBlowSequence(); });
+
+// blow sequence
+function doBlowSequence(){
+  blown=true;
+  document.querySelectorAll('.flame').forEach(f=>{
+    f.style.transition='opacity 400ms ease'; f.style.opacity=0;
+  });
+  const blowS=document.getElementById('blowSnd');
+  const song=document.getElementById('bgSong');
+  if(blowS){ blowS.currentTime=0; blowS.play().catch(()=>{}); }
+  setTimeout(()=>{ if(song){ song.currentTime=0; song.play().catch(()=>{}); } },300);
+
+  // Update blow text
+  const blowText = document.getElementById('blowText');
+  blowText.textContent = "Awwww you blew it 🥹✨ I swear you’re the cutest.";
+
+  document.body.classList.add('night');
+  bigBursts=true;
+
+  spawnBurst(window.innerWidth*0.5,window.innerHeight*0.35,160);
+  spawnBurst(window.innerWidth*0.3,window.innerHeight*0.45,120);
+  spawnBurst(window.innerWidth*0.7,window.innerHeight*0.4,120);
+
+  const colors=['#ff7fb3','#ffd36f','#a0f0ff','#ffc2ea','#ffd1b8'];
+  for(let i=0;i<8;i++) setTimeout(()=> spawnBalloon(colors[i%colors.length],5+Math.random()*90),i*300);
+
+  setTimeout(()=>{ document.getElementById('nextBtn').classList.add('show'); },900);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Journey 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+html,body { height:100%; overflow:hidden; }
+
+/* VIDEO */
+video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: auto;
+  object-fit: contain;
+  background: black;
+  z-index: -1;
+}
+
+/* BUTTONS */
+#letterBtn{
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  padding:14px 22px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:16px;
+  z-index:5;
+  background:#ff69b4;
+  box-shadow:0 0 15px hotpink;
+}
+
+/* AUDIO BUTTONS */
+#audioBtnVideo, #audioBtnFinal {
+  position:fixed;
+  top:20px;
+  right:20px;
+  border:none;
+  border-radius:50%;
+  padding:10px 14px;
+  cursor:pointer;
+  font-size:18px;
+  z-index:6;
+}
+#audioBtnVideo { background:#ff69b4; }
+#audioBtnFinal { background:#00ffff; display:none; }
+
+/* LETTER BOX */
+#letterBox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 30, 0.65);
+  backdrop-filter: blur(6px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#letter {
+  width: 90%;
+  max-width: 420px;
+  padding: 28px 26px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  text-align: center;
+  color: #fff;
+  box-shadow:
+    0 0 20px rgba(255, 105, 180, 0.6),
+    0 0 40px rgba(0, 255, 255, 0.4);
+  animation: softPop 0.8s ease;
+}
+
+@keyframes softPop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+#typedText, #finalText {
+  min-height: 120px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #ffeef8;
+  text-shadow: 0 0 8px rgba(255, 182, 193, 0.8);
+  white-space: pre-wrap;
+}
+
+input {
+  padding: 12px;
+  width: 80%;
+  border-radius: 14px;
+  border: none;
+  margin-top: 14px;
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  text-align: center;
+  font-size: 15px;
+  outline: none;
+  box-shadow:
+    inset 0 0 10px rgba(255, 255, 255, 0.25),
+    0 0 15px rgba(255, 105, 180, 0.6);
+}
+
+#letter button {
+  margin-top: 18px;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  color: #fff;
+  font-size: 15px;
+  box-shadow:
+    0 0 15px rgba(255, 105, 180, 0.8),
+    0 0 30px rgba(255, 20, 147, 0.6);
+}
+
+/* FINAL PAGE */
+#final {
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  background:radial-gradient(circle,#120458,#000);
+  color:#fff;
+  z-index:20;
+  text-align:center;
+  overflow:hidden;
+}
+
+#photo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: radial-gradient(circle, #2b1055, #000);
+  padding: 10px;
+  box-shadow:
+    0 0 20px #ff00ff,
+    0 0 40px #00ffff,
+    0 0 60px rgba(255,20,147,0.6);
+  margin-bottom: 20px;
+}
+
+.glowText {
+  font-size:26px;
+  line-height:1.7;
+  text-shadow:
+    0 0 10px #ff00ff,
+    0 0 20px #00ffff,
+    0 0 40px #ff1493;
+  z-index:2;
+}
+
+/* 🌟 NEXT BUTTON */
+#nextPageBtn{
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  padding: 14px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(135deg,#ff4ecd,#7a5cff);
+  box-shadow:
+    0 0 15px rgba(255,78,205,.7),
+    0 0 30px rgba(122,92,255,.6);
+  animation: glowPulse 1.6s infinite alternate;
+  z-index: 30;
+  display: none;
+}
+
+@keyframes glowPulse{
+  from { box-shadow:0 0 10px #ff4ecd; }
+  to { box-shadow:0 0 30px #7a5cff; }
+}
+
+/* CURSOR */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  background: #ff69b4;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+}
+@keyframes blink {
+  0%,50%,100%{opacity:1;}
+  25%,75%{opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<video id="bgVideo" autoplay loop playsinline muted>
+  <source src="vd3.mp4" type="video/mp4">
+</video>
+
+<button id="letterBtn">💌 Click Me</button>
+<button id="audioBtnVideo">🔇</button>
+<button id="audioBtnFinal">🔊</button>
+
+<div id="letterBox">
+  <div id="letter">
+    <div id="typedText"></div><span class="cursor"></span>
+    <input id="pass" type="password" placeholder="Enter password">
+    <button onclick="unlock()">Unlock</button>
+  </div>
+</div>
+
+<div id="final">
+  <img id="photo" src="rap.jpg">
+  <div class="glowText" id="finalText"></div><span class="cursor"></span>
+  <button id="nextPageBtn" onclick="goNextPage()">Next ➜</button>
+</div>
+
+<audio id="music" src="cuppycake.mp3" loop></audio>
+<audio id="finalMusic" src="ReelAudio-30696.mp3" loop></audio>
+
+<script>
+const bgVideo = document.getElementById("bgVideo");
+const music = document.getElementById("music");
+const finalMusic = document.getElementById("finalMusic");
+const typedText = document.getElementById("typedText");
+const finalText = document.getElementById("finalText");
+const pass = document.getElementById("pass");
+const final = document.getElementById("final");
+
+const lines = [
+  "Hey you 💖",
+  `One year ago, we started talking… never imagining how completely you would capture my heart.
+With every laugh we shared, every little secret, and every quiet moment,
+I found myself falling deeper for you`,
+  `Somewhere along the way, you became my safe place, my joy, my favorite thought… the one my heart can’t stop longing for 🌷`,
+  `You’re not just my favorite person—you’re the part of me I didn’t know was missing. 
+And now, all I know is this—I don’t ever want you to go from my life.`
+];
+
+const finalLines = [
+  "You are my comfort 💕",
+  "My safe place 🌸",
+  "My favorite chapter 💖",
+  "",
+  `Raat bhar socha 😌… kya pasand hai usme?
+Par jitna socha, utna samajh aaya… 𝘀𝗵𝗮𝗸𝗮𝗹, 𝗮𝗮𝗱𝗮𝘁𝗲𝗶𝗻, 𝘂𝗻𝗸𝗶 𝗯𝗮𝗮𝘁𝗲𝗻, 𝗵𝗮𝗿𝗸𝗮𝘁𝗲𝗶𝗻 sab baad mein hain 😄
+
+Sabse pehle toh 𝖀𝖓𝖐𝖆 hona hi accha lagta hai 🫰💓`
+];
+
+
+// Unmute on first click
+document.body.addEventListener("click", function(){
+  bgVideo.muted = false;
+},{once:true});
+
+// LETTER BUTTON
+letterBtn.onclick = () => {
+  bgVideo.src = "vd4.mp4";
+  bgVideo.muted = true;
+  bgVideo.play();
+  music.play();
+  letterBox.style.display = "flex";
+  typedText.innerHTML = "";
+  typeLines(lines, typedText, 0);
+};
+
+// TYPING FUNCTION
+function typeLines(arr, element, index) {
+  if(index >= arr.length) return;
+  let text = arr[index];
+  let charIndex = 0;
+  element.innerHTML += "\n"; // space between lines
+  const t = setInterval(()=>{
+    if(charIndex < text.length){
+      element.innerHTML += text[charIndex++];
+    } else {
+      clearInterval(t);
+      typeLines(arr, element, index + 1);
+    }
+  },50);
+}
+
+// UNLOCK FINAL PAGE
+function unlock(){
+  if(pass.value === "riya15"){
+    letterBox.style.display = "none";
+    bgVideo.pause();
+    bgVideo.style.display = "none";
+    music.pause();
+    final.style.display = "flex";
+    finalMusic.play();
+    typeLines(finalLines, finalText, 0);
+    // Show next button after all typing
+    setTimeout(()=>{
+      document.getElementById("nextPageBtn").style.display="block";
+    }, finalLines.join("").length * 60);
+  } else alert("Wrong password 💔");
+}
+
+function goNextPage(){
+  window.location.href="save.html";
+}
+</script>
+
+</body>
+</html>

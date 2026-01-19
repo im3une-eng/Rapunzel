@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Romantic Letter 💌</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Handwritten Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Homemade+Apple&display=swap" rel="stylesheet">
+
+<style>
+/* ===== BODY ===== */
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
+  background: radial-gradient(circle,#1a1a2e,#162447,#0f3460);
+  position:relative;
+}
+
+/* ===== VIGNETTE ===== */
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.5) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+
+/* ===== OUTSIDE FLOATING HEARTS & STARS ===== */
+.outside-float{
+  position:absolute;
+  bottom:-40px;
+  animation:floatUp 10s linear infinite;
+  opacity:0.85;
+  pointer-events:none;
+  font-size:20px;
+  color:#ff8fc5; 
+}
+@keyframes floatUp{
+  to{transform:translateY(-120vh);}
+}
+
+/* ===== LETTER BOX ===== */
+.letter{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.2) rotateX(-60deg);
+  width:800px;
+  max-width:95%;
+  height:75vh;
+  padding:40px;
+  border-radius:28px;
+  font-family:'Allura','Homemade Apple',cursive;
+  font-size:1.6rem;
+  line-height:1.9;
+  overflow:hidden;
+  z-index:10;
+  color:#000000;
+  background: url('letter.jpg') no-repeat center center;
+  background-size: cover;
+  border: 3px solid rgba(255,182,210,0.6);
+  box-shadow:
+    0 0 20px rgba(255,182,210,0.4),
+    0 0 40px rgba(255,192,220,0.3),
+    0 25px 50px rgba(0,0,0,0.4);
+  transition: all 0.8s ease, transform 1.2s ease;
+  perspective: 1000px;
+  animation: pulseBorder 2.5s infinite alternate;
+  position: relative;
+}
+.letter::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(208,240,253,0.25); 
+  pointer-events:none;
+  border-radius:28px;
+  z-index:5;
+}
+
+/* Soft glowing pulse */
+@keyframes pulseBorder{
+  0%{ box-shadow:0 0 20px rgba(255,182,210,0.4),0 0 40px rgba(255,192,220,0.3),0 25px 50px rgba(0,0,0,0.4);}
+  100%{ box-shadow:0 0 28px rgba(255,200,230,0.5),0 0 50px rgba(255,210,240,0.35),0 25px 50px rgba(0,0,0,0.45);}
+}
+
+/* Handwritten text scroll */
+.letter-content{
+  position: relative;
+  z-index:10;
+  height:100%;
+  overflow-y:auto;
+  padding-right:10px;
+  color:#4a2f3c;
+  text-shadow: 0 0 2px rgba(255,255,255,0.8);
+  font-weight: bold;
+}
+
+/* Blinking cursor */
+.letter-content::after {
+  content: '|';
+  animation: blink 1s steps(2, start) infinite;
+  display: inline-block;
+  margin-left: 2px;
+  color: #4a2f3c;
+}
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ===== NEXT BUTTON ===== */
+.next-btn{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:15px 36px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#ff9ccf,#ff5c8a);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  z-index:20;
+  display:none;
+}
+
+/* ===== OPEN LETTER BUTTON ===== */
+#startBtn{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  padding:20px 40px;
+  font-size:1.4rem;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#ff9ccf,#ff5c8a);
+  color:#fff;
+  cursor:pointer;
+  z-index:15;
+}
+
+/* ===== AUDIO HIDDEN ===== */
+audio{
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LETTER BOX -->
+<div class="letter" id="letter">
+  <div class="letter-content" id="letterContent"></div>
+</div>
+
+<!-- NEXT BUTTON -->
+<button class="next-btn" id="nextBtn">Aage Chle ➡️</button>
+
+<!-- START LETTER BUTTON -->
+<button id="startBtn">A Whisper for You 🌷💌</button>
+
+<!-- SONG -->
+<audio id="song" src="rmntc.mp3"></audio>
+
+<script>
+// ===== TEXT =====
+const text = `I don’t really know how to begin this… because some feelings don’t come with a beginning 💭.
+They don’t knock 🚪 or announce themselves.
+They just grow quietly—until one day, you realize they’ve settled deep inside your heart ❤️.
+
+I never planned to get this attached 🤍. I didn’t even notice when it happened. Somehow, slowly, you became a part of my life—emotionally and mentally 💫🧠. And honestly… I still don’t know how you did that to me. It just happened, so naturally.
+
+Yes, we met online 🌐, and people say connections like this aren’t real. But with you, everything feels effortless and true 🫶. The way we talk, the way our conversations flow, the way your words reach me—it’s a bond I can’t explain, only feel 💬💖.
+
+There’s something incredibly exotic about your energy ✨—not because of how you look, but because of how you are. The way you chat 🥺, the warmth in your messages, the honesty in your words… I find myself waiting for you, smiling at my screen, feeling calm just by talking to you 📱🤍.
+
+Your beauty isn’t just in your smile or your eyes 🌹. It lives in your thoughts, your kindness, your strength, and even in your flaws. You’re the kind of beautiful that exists in moments—in shared laughter 😂, in playful teasing 😌, in comfortable silence 🤍.
+
+I’m not usually the soft or “pookie” type 🙈, but you bring out a gentler side of me that I didn’t even know existed 🌙. That’s your quiet magic 💫. You make hearts feel safe, without even trying.
+
+You’ve taught me so much—without lessons, without effort 📖💖. Just your presence feels like guidance 🤍.
+The calm you carry, the way you understand things, the comfort in your words—it all settles softly inside my heart. 
+
+And even though you’re younger 🌱, in the moments that truly matter, you feel wiser 🌙. There’s a depth in you, in the way you think and respond, that makes me pause and admire you 🥺. Your thoughts don’t just stay in my mind—they stay with my heart 🌸.
+
+Being with you, even through the simplest conversations, feels like home 💫💖.
+Your presence softens me, steadies me, and makes everything feel a little more beautiful—just by being there 🤍✨.
+
+And here’s the playful truth I’ve been avoiding 🙈…
+My heart got a little too comfortable with you 💖.
+It listens for you.
+It waits for you.
+And somehow, without asking, it chose you—quietly, completely, and honestly 🥺✨.`;
+
+const content = document.getElementById("letterContent");
+const nextBtn = document.getElementById("nextBtn");
+const song = document.getElementById("song");
+const startBtn = document.getElementById("startBtn");
+
+// ===== FLOATING EMOJIS =====
+const emojis = ["💖","💫","🌸","✨","💌"];
+setInterval(()=> {
+  const e = document.createElement("div");
+  e.className = "outside-float";
+  e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.left = Math.random()*100 + "vw";
+  e.style.fontSize = 16 + Math.random()*22 + "px";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),10000);
+}, 400);
+
+// ===== TYPE TEXT FUNCTION WITH SCROLLING =====
+let i = 0;
+function typeText() {
+  song.play(); // Play song reliably after user click
+  const t = setInterval(() => {
+    const char = text.charAt(i);
+    if(char === "\n") content.innerHTML += "<br>";
+    else content.innerHTML += char;
+    content.scrollTop = content.scrollHeight; // auto-scroll
+    i++;
+    if(i >= text.length) {
+      clearInterval(t);
+      nextBtn.style.display = "block"; // show next button
+      content.classList.remove("typing"); // remove cursor
+    }
+  }, 18);
+}
+
+// ===== OPEN LETTER BUTTON =====
+startBtn.onclick = () => {
+  startBtn.style.display = "none"; // hide button
+  const letter = document.getElementById("letter");
+  letter.style.transform = "translate(-50%,-50%) scale(1) rotateX(0deg)"; // unfold
+  typeText(); // start typing + song
+};
+
+// ===== NEXT BUTTON =====
+nextBtn.onclick = () => {
+  window.location.href = "journey.html"; // replace with your next page
+};
+</script>
+
+</body>
+</html>
