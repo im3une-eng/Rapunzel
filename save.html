@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Magical Diary & Memories 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+  background:linear-gradient(180deg,#1b1b3a,#2e0f4a);
+  color:#fff;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding-bottom:70px;
+  overflow-x:hidden;
+}
+h1{
+  padding:20px;
+  font-size:2.5rem;
+  color:#ff77aa;
+  text-shadow:0 0 30px #ff77aa;
+  text-align:center;
+  font-weight:bold;
+}
+
+/* MUSIC BUTTON */
+#musicBtn{
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  width:56px;height:56px;
+  border-radius:50%;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.3);
+  font-size:22px;color:#fff;
+  cursor:pointer;z-index:50;
+  box-shadow:0 0 15px #ff77aa;
+}
+#musicBtn:hover{ transform:scale(1.1); }
+
+/* ADD MEMORY BUTTON */
+#openFormBtn{
+  position:fixed;
+  bottom:20px;right:20px;
+  padding:14px 22px;border-radius:50px;
+  border:none;
+  background:linear-gradient(135deg,#ff77aa,#a86eff);
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:0 0 30px #ff77aa;
+  z-index:50;
+}
+#openFormBtn:hover{ transform:scale(1.05); }
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:14px;
+  width:95%;
+  max-width:1200px;
+  padding:20px;
+}
+.cell{
+  background:rgba(255,255,255,.07);
+  border-radius:20px;
+  min-height:220px;
+  cursor:pointer;
+  backdrop-filter: blur(8px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform .3s, box-shadow .3s;
+  overflow:hidden;
+  position:relative;
+}
+.cell:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px #ff77aa;
+}
+.cell img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:blur(6px);
+}
+.cell.empty{
+  font-size:2rem;
+  opacity:.5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* FORM */
+.noteForm{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:80;
+}
+.noteBox{
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(16px);
+  padding:30px;
+  border-radius:25px;
+  width:90%;max-width:450px;
+  text-align:center;
+  box-shadow:0 0 50px rgba(255,182,193,.4);
+  position:relative;
+}
+.noteBox input,.noteBox textarea{
+  width:100%;padding:14px;margin:10px 0;
+  border:none;border-radius:16px;
+  background:rgba(255,255,255,.25);
+  color:#fff;text-align:center;
+  font-size:16px;
+}
+.noteBox textarea{min-height:120px}
+.noteBox button{
+  padding:12px 18px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#ff77aa,#ff99cc);
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:0 0 25px #ff77aa;
+  transition:0.3s;
+}
+.noteBox button:hover{ transform:scale(1.05); }
+.noteBox .cancelBtn{
+  position:absolute;
+  top:15px;
+  right:15px;
+  background:#ff4d6d;
+  border:none;
+  border-radius:50%;
+  width:36px;height:36px;
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* VIEW MODAL */
+#modal{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.95);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:120;
+}
+#modalContent{
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(14px);
+  padding:20px;
+  border-radius:22px;
+  width:90%;max-width:600px;
+  text-align:center;
+  position:relative;
+  transition:filter 0.5s;
+}
+#modalContent img{
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:80vh;
+  border-radius:16px;
+  margin-top:10px;
+  object-fit:contain;
+}
+#deleteBtn{
+  margin-top:15px;
+  padding:10px 16px;
+  border:none;
+  border-radius:20px;
+  background:#ff4d6d;
+  color:#fff;
+  cursor:pointer;
+  font-size:16px;
+}
+#modalContent .closeView{
+  position:absolute;
+  top:10px;right:10px;
+  background:#ff4d6d;
+  border:none;
+  border-radius:50%;
+  width:36px;height:36px;
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<h1>Magical Diary & Memories 💖</h1>
+
+<audio id="bgMusic" loop src="main-bola-hey-TVF-Kota-Factory-FilesGarage-KarthikRao.mp3"></audio>
+<audio id="heartBeat" src="heart-beat(chosic.com).mp3"></audio>
+
+<button id="musicBtn">🎵</button>
+<button id="openFormBtn">➕ Add a Little Love 💝</button>
+
+<!-- FORM -->
+<div class="noteForm" id="noteForm">
+  <div class="noteBox">
+    <button class="cancelBtn" onclick="noteForm.style.display='none'">✖</button>
+    <h2>Eternal Moments 💌</h2>
+    <input id="diaryName" placeholder="Name 💖">
+    <textarea id="diaryText" placeholder="Feelings 💕"></textarea>
+    <input type="file" id="diaryMedia" accept="image/*" multiple>
+    <button type="button" onclick="addDiary()">Save Memory ✨</button>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<!-- VIEW MODAL -->
+<div id="modal">
+  <div id="modalContent">
+    <button class="closeView" onclick="closeModal()">✖</button>
+  </div>
+</div>
+
+<script>
+const VIEW_PASS="1527";
+const DELETE_PASS="2715";
+const IMGBB_KEY="2200c675e0020eb29203ba145bacd42d"; // 🔑 Paste your ImgBB API key
+let currentIndex=null;
+
+/* MUSIC BUTTON */
+musicBtn.onclick=()=>{
+  if(bgMusic.paused){ bgMusic.play(); musicBtn.textContent="⏸"; }
+  else { bgMusic.pause(); musicBtn.textContent="🎵"; }
+};
+
+/* OPEN FORM */
+openFormBtn.onclick=()=>noteForm.style.display="flex";
+
+/* INIT DIARY SLOTS */
+function init(){
+  let d=JSON.parse(localStorage.getItem("diary")||"[]");
+  while(d.length<25)d.push(null); // minimum 25 slots
+  localStorage.setItem("diary",JSON.stringify(d));
+  render();
+}
+init();
+
+/* RENDER SLOTS */
+function render(){
+  let d=JSON.parse(localStorage.getItem("diary"));
+  grid.innerHTML="";
+  d.forEach((slot,i)=>{
+    let c=document.createElement("div");
+    c.className="cell "+(slot?"":"empty");
+    if(slot && slot.files && slot.files.length){
+      let img=document.createElement("img");
+      img.src=slot.files[0].src;
+      c.appendChild(img);
+      c.onclick=()=>{currentIndex=i;unlock();};
+    }else{
+      c.innerHTML="➕";
+      c.onclick=()=>openFormBtn.click();
+    }
+    grid.appendChild(c);
+  });
+}
+
+/* UNLOCK SLOT */
+function unlock(){
+  if(prompt("View password?")!==VIEW_PASS) return;
+  view(currentIndex);
+}
+
+/* VIEW SLOT */
+function view(i){
+  let slot=JSON.parse(localStorage.getItem("diary"))[i];
+  modal.style.display="flex";
+  modalContent.innerHTML=`
+    <button class="closeView" onclick="closeModal()">✖</button>
+    <h2>${slot.name||""}</h2>
+    <p>${slot.text||""}</p>
+    ${slot.files.map(f=>`<img src="${f.src}">`).join("")}
+    <br><button id="deleteBtn" onclick="deleteEntry()">Delete 🗑️</button>
+  `;
+}
+
+/* CLOSE MODAL */
+function closeModal(){ modal.style.display="none"; }
+
+/* DELETE SLOT */
+function deleteEntry(){
+  if(prompt("Delete password?")!==DELETE_PASS)return;
+  let d=JSON.parse(localStorage.getItem("diary"));
+  d[currentIndex]=null;
+  localStorage.setItem("diary",JSON.stringify(d));
+  modal.style.display="none";
+  render();
+}
+
+/* ADD DIARY - UPLOAD TO ImgBB */
+async function addDiary(){
+  let files=[...diaryMedia.files];
+  if(!files.length) return alert("Select image 💔");
+  let filesArray=[];
+
+  for(let f of files){
+    const formData=new FormData();
+    formData.append("image",f);
+    try{
+      const res=await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`,{method:"POST",body:formData});
+      const data=await res.json();
+      if(!data.success) return alert("Upload failed 💔");
+      filesArray.push({type:"image",src:data.data.url});
+    }catch(err){alert("Upload error 💔");console.log(err);}
+  }
+
+  let d=JSON.parse(localStorage.getItem("diary"));
+  let i=d.findIndex(x=>x===null);
+  if(i===-1){d.push(null);i=d.length-1;}
+
+  if(d[i]){
+    d[i].name = diaryName.value || d[i].name;
+    d[i].text = diaryText.value || d[i].text;
+    d[i].files = d[i].files ? d[i].files.concat(filesArray) : filesArray;
+  }else{
+    d[i]={name:diaryName.value,text:diaryText.value,files:filesArray};
+  }
+
+  localStorage.setItem("diary",JSON.stringify(d));
+  diaryName.value=diaryText.value=diaryMedia.value="";
+  noteForm.style.display="none";
+  render();
+  alert("Memory saved successfully! 💖"); // ✅ success message
+}
+</script>
+</body>
+</html>
